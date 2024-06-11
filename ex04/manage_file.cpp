@@ -20,11 +20,14 @@ int manage::readFile()
 	while(std::getline(_inputFile, str))
 	{
 		std::size_t pos = str.find(this->_s1);
-		while(pos != std::string::npos)
+		if(!this->_s1.empty())
 		{
-			str.erase(pos, this->_s1.length());
-            str.insert(pos, this->_s2);
-			pos = str.find(this->_s1);
+			while(pos != std::string::npos)
+			{
+				str.erase(pos, this->_s1.length());
+				str.insert(pos, this->_s2);
+				pos = str.find(this->_s1);
+			}
 		}
 		this->_outputFile << str << std::endl;
 	}
