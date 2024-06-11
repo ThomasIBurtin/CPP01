@@ -15,25 +15,29 @@ manage::manage(std::string filename, std::string s1, std::string s2)
 
 int manage::readFile()
 {
-	std::string str;
-	
-	while(std::getline(_inputFile, str))
-	{
-		std::size_t pos = str.find(this->_s1);
+    std::string str;
+    
+    while(std::getline(_inputFile, str))
+    {
+        std::size_t pos = 0;
 		if(!this->_s1.empty())
 		{
 			while(pos != std::string::npos)
 			{
-				str.erase(pos, this->_s1.length());
-				str.insert(pos, this->_s2);
-				pos = str.find(this->_s1);
+				pos = str.find(this->_s1, pos);
+				if(pos != std::string::npos)
+				{
+					str.erase(pos, this->_s1.length());
+					str.insert(pos, this->_s2);
+					pos += this->_s2.length();
+				}
 			}
 		}
-		this->_outputFile << str << std::endl;
-	}
-	_inputFile.close();
-	_outputFile.close();
-	return(0);
+        this->_outputFile << str << std::endl;
+    }
+    _inputFile.close();
+    _outputFile.close();
+    return 0;
 }
 
 manage::~manage()
